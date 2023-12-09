@@ -129,7 +129,7 @@ section
     width:50%;
     padding:2rem;
     box-shadow: var(--box-shadow);
-    border-radius: .5rem;
+    border-radius: 2rem;
     margin:2rem;
     height:auto;
 }

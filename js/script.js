@@ -2,6 +2,19 @@ let queue = [];
 let rear = -1;
 let size = 5;
 let selectedItems = [];
+let totalQuantity;
+
+const itemPrices = {
+    'Mango': 1.00,
+    'Apple': 2.00,
+    'Banana': 1.50,
+    'Biscuit': 3.00,
+    'Crackers': 2.50,
+    'Oishi': 1.00,
+    'Chips': 4.00,
+    'Fita': 1.50,
+    'Fish': 2.00
+};
 
 function addCustomer() {
     let newCustomerName = document.querySelector('.box1').value;
@@ -22,8 +35,9 @@ function addCustomer() {
         return;
     }
 
+    let totalCost = calculateTotalCost(selectedItems);
     rear = (rear + 1) % size;
-    queue[rear] = { name: newCustomerName, items: [...selectedItems] };
+    queue[rear] = { name: newCustomerName, items: [...selectedItems], totalCost: totalCost };
     displayQueue();
     resetCart();
     resetForm();
@@ -32,8 +46,24 @@ function addCustomer() {
 }
 
 function getSelectedItems() {
-    let items = document.querySelectorAll('.Items input[type=checkbox]:checked + span');
-    return Array.from(items).map(item => item.textContent);
+    let items = document.querySelectorAll('.Items input[type=checkbox]:checked');
+    
+    // Prompt for the total quantity
+    let totalQuantity = prompt('Enter total quantity for selected items:');
+    if (isNaN(totalQuantity) || totalQuantity <= 0) {
+        alert('Please enter a valid quantity.');
+        return [];
+    }
+
+    return Array.from(items).map(item => {
+        let itemName = item.nextElementSibling.textContent;
+        return { name: itemName, quantity: parseInt(totalQuantity), price: itemPrices[itemName] };
+    });
+}
+
+
+function calculateTotalCost(items) {
+    return items.reduce((total, item) => total + item.quantity * item.price, 0);
 }
 
 function isQueueFull() {
@@ -57,7 +87,9 @@ function dequeueCustomer() {
     }
 
     displayQueue();
-    resetForm(); 
+    resetForm();
+    // Display the total cost when dequeuing
+    alert(`Total cost for ${dequeuedCustomer.name}: $${dequeuedCustomer.totalCost.toFixed(2)}`);
 }
 
 function isEmpty() {
@@ -76,26 +108,26 @@ function displayQueue() {
             if (document.querySelector('.login-form').classList.contains('active')) {
 
                 if (customer.items.length > 0) {
-                    goodsListElement.innerHTML = "Item Ordered:<br>";
+                    goodsListElement.innerHTML = "Items Ordered:<br>";
                     goodsListElement.innerHTML += "<ol>"; // Start ordered list
 
                     customer.items.forEach(item => {
-                        goodsListElement.innerHTML += `<li>${item}</li>`;
+                        let itemCost = item.price * item.quantity;
+                        goodsListElement.innerHTML += `<li>${item.name} = $${itemCost.toFixed(2)} x ${item.quantity}</li>`;
                     });
 
                     goodsListElement.innerHTML += "</ol>"; // End ordered list
-                } else {
-                    goodsListElement.innerHTML = "Item Ordered:"; // Display only when items are present
+
+                    // Calculate and display the total amount
+                    goodsListElement.innerHTML += `<br>Total Amount: $${customer.totalCost.toFixed(2)}`;
                 }
             }
         } else {
-            customerInfoElement.textContent = "";
-            goodsListElement.innerHTML = "Item Ordered:"; // Reset content when no customer
+            customerInfoElement.textContent = ""; // Reset content when no customer
+            goodsListElement.innerHTML = ""; // Reset content when no customer
         }
     }
 }
-
-
 
 function resetCart() {
     selectedItems = [];
@@ -112,7 +144,6 @@ document.querySelectorAll('.Items input[type=checkbox]').forEach(checkbox => {
     });
 });
 
-
 function updateCart() {
     selectedItems = getSelectedItems();
     let cartElement = document.querySelector('.Cart');
@@ -120,7 +151,8 @@ function updateCart() {
     if (selectedItems.length > 0) {
         cartElement.innerHTML = 'Your Ordered Items:<br>';
         selectedItems.forEach(item => {
-            cartElement.innerHTML += `${item}<br>`;
+            let itemCost = item.price * item.quantity;
+            cartElement.innerHTML += `[${item.name} = $${itemCost.toFixed(2)} x ${item.quantity}]<br>`;
         });
     } else {
         cartElement.innerHTML = 'Your Ordered Items:';
