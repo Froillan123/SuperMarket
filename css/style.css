@@ -1,0 +1,182 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    font-family: "Poppins", sans-serif;
+    scroll-behavior: smooth;
+    text-decoration: none;
+    transition: all .2s ease;
+}
+
+html 
+{
+    font-size: 62.5%;
+}
+:root
+{
+    --green: #27ae60;
+    --dark-green: #219150;
+    --black: #444;
+    --gray: #bdb9b9;
+    --border: .1rem solid rgba(0,0,0,.1);
+    --bg-color: #ededed;
+}
+body
+{
+    background: var(--bg-color);
+}
+
+section 
+{
+    padding: 1rem 5%;
+}
+
+
+.header
+{
+    width: 100%;
+    font-size: 2rem;
+    text-align: center;
+    color: var(--green);
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    margin-top: 5rem;
+}
+
+.box {
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid var(--black);
+    border-radius: .6rem;
+}
+
+.box:first-child {
+    border: 3px solid var(--dark-green); /* Set your desired background color */
+    border-radius: 0;
+}
+
+.buttons
+{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+.btn {
+    margin-top: 10px;
+    padding: 10px;
+    background: var(--green);
+    cursor: pointer;
+    color: var(--black);
+    border-radius: .5rem;
+    font-size: 1.7rem;
+}
+.goods-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.customer-info {
+    font-weight: bold;
+    font-size: 1.6rem;
+}
+
+.box h2 
+{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--black);
+}
+
+
+/* customer order */
+
+.login-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:rgba(255,255,255,.9);
+    position:fixed;
+    top:0; right:-105%;
+    z-index: 10000;
+    height:100%;
+    width:100%;
+}
+.login-form.active{
+    right:0;
+}
+
+.login-form form{
+    background:#fff;
+    border:var(--border);
+    width:70%;
+    padding:2rem;
+    box-shadow: var(--box-shadow);
+    border-radius: .5rem;
+    margin:2rem;
+}
+
+.login-form form h3{
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    color:var(--black);
+    text-align: center;
+}
+
+.login-form form .box1{
+    width: 50%;
+    margin:2rem 0;
+    font-size: 1.6rem;
+    border: 2px solid var(--black);
+    border-radius: .5rem;
+    padding:1rem 1.2rem;
+    color:var(--black);
+    text-transform: none;
+    text-align: center;
+}
+.login-form form .box1 placeholder
+{
+    text-align: center;
+}
+
+.login-form form .Items 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-form form .btn{
+    text-align: center;
+    width:100%;
+    margin:1.5rem 0;
+}
+
+.login-form form p{
+    padding-top: .8rem;
+    color:var(--light-color);
+    font-size: 1.5rem;
+}
+
+.login-form form p a{
+    color:var(--green);
+    text-decoration: underline;
+}
+
+.login-form #close-login-btn{
+    position: absolute;
+    top:1.5rem; right:2.5rem;
+    font-size: 5rem;
+    color:var(--black);
+    cursor: pointer;
+}
