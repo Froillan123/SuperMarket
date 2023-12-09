@@ -11,12 +11,9 @@
 </head>
 <body>
 
-
     <header class="header" id="header"><br>
         <h1>SuperMarket Queue</h1>
     </header>
-
-
     <main>
         <section class="grid" id="queueSection1">
             <div class="grid-container">
@@ -26,7 +23,6 @@
                     <ul class="goods-list" id="goodsList1"></ul>
                 </div>
                 <div class="box" id="box2">
-                    
                     <h2>Counter 2</h2>
                     <div class="customer-info" id="customerInfo2"></div>
                     <ul class="goods-list" id="goodsList2"></ul>
@@ -48,55 +44,41 @@
                 </div>
             </div>
             <div class="buttons">
-            <button class="btn" onclick="dequeueCustomer()">Next</button>
-            <a href="#" id="login-btn" class="btn" onclick="addCustomer()">Add Customer</a>
-        </div>
+                <button class="btn" onclick="dequeueCustomer()">Next Counter</button>
+                <a href="#" id="login-btn" class="btn" onclick="addCustomer()">Add Customer</a>
+            </div>
         </section>
-
-
-        
     </main>
 
-<!-- ... other HTML code ... -->
-
-<div class="login-form">
-    <div id="close-login-btn" class="fas fa-times"></div>
-    <form id="form">
-        <h3>SuperMarket Menu</h3>
-        <center><input type="text" class="box1" name="" placeholder="Enter Your Name" id=""></center>
-        <center><h4>Items</h4></center>
-        <div class="Items">
-                
-            <div class="goods" id="goods">
-                <input type="checkbox" name="item" class="hero" id="mango"> <span>Mango</span>
-                <input type="checkbox" name="item" class="hero" id="apple"> <span>Apple</span>
-                <input type="checkbox" name="item" class="hero" id="banana"> <span>Banana</span>
+    <div class="login-form">
+        <div id="close-login-btn" class="fas fa-times"></div>
+        <form id="form" onsubmit="event.preventDefault(); addCustomer();">
+            <h3>SuperMarket Menu</h3>
+            <center><input type="text" class="box1" name="" placeholder="Enter Your Name" id=""></center>
+            <center><h4>Items</h4></center>
+            <div class="Items">
+                <div class="goods" id="goods">
+                    <input type="checkbox" name="item" class="hero" id="mango"> <span>Mango</span>
+                    <input type="checkbox" name="item" class="hero" id="apple"> <span>Apple</span>
+                    <input type="checkbox" name="item" class="hero" id="banana"> <span>Banana</span>
+                </div>
+                <div class="goods" id="goods">
+                    <input type="checkbox" name="item" class="hero" id="biscuit"> <span>Biscuit</span>
+                    <input type="checkbox" name="item" class="hero" id="crackers"> <span>Crackers</span>
+                    <input type="checkbox" name="item" class="hero" id="oishi"> <span>Oishi</span>
+                </div>
+                <div class="goods" id="goods">
+                    <input type="checkbox" name="item" class="hero" id="chips"> <span>Chips</span>
+                    <input type="checkbox" name="item" class="hero" id="fita"> <span>Fita</span>
+                    <input type="checkbox" name="item" class="hero" id="fishCracker"> <span>Fish</span>
+                </div>
             </div>
+            <center><div class="Cart"></div></center>
+            <button type="button" class="button" onclick="addCustomer()">Proceed To Counter</button>
+        </form>
+    </div>
 
-          
-            <div class="goods" id="goods">
-                <input type="checkbox" name="item" class="hero" id="biscuit"> <span>Biscuit</span>
-                <input type="checkbox" name="item" class="hero" id="crackers"> <span>Crackers</span>
-                <input type="checkbox" name="item" class="hero" id="oishi"> <span>Oishi</span>
-            </div>
-
-         
-            <div class="goods" id="goods">
-                <input type="checkbox" name="item" class="hero" id="chips"> <span>Chips</span>
-                <input type="checkbox" name="item" class="hero" id="fita"> <span>Fita</span>
-                <input type="checkbox" name="item" class="hero" id="fishCracker"> <span>Fish</span>
-            </div>
-
-        </div>
-        <center><div class="Cart"></div></center>
-        <button type="button" class="button" onclick="addCustomer()">Proceed To Counter</button>
-    </form>
-</div>
-
-
-
-
-</body>
-    <script src="js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/script.js"></script>
+</body>
 </html>

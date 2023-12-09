@@ -2,7 +2,6 @@ let queue = [];
 let rear = -1;
 let size = 5;
 let selectedItems = [];
-let totalQuantity;
 
 const itemPrices = {
     'Mango': 1.00,
@@ -46,24 +45,45 @@ function addCustomer() {
 }
 
 function getSelectedItems() {
-    let items = document.querySelectorAll('.Items input[type=checkbox]:checked');
-    
-    // Prompt for the total quantity
-    let totalQuantity = prompt('Enter total quantity for selected items:');
-    if (isNaN(totalQuantity) || totalQuantity <= 0) {
-        alert('Please enter a valid quantity.');
-        return [];
-    }
-
-    return Array.from(items).map(item => {
-        let itemName = item.nextElementSibling.textContent;
-        return { name: itemName, quantity: parseInt(totalQuantity), price: itemPrices[itemName] };
-    });
+    let items = document.querySelectorAll('.Items input[type=checkbox]:checked + span');
+    return Array.from(items).map(item => item.textContent);
 }
 
 
 function calculateTotalCost(items) {
-    return items.reduce((total, item) => total + item.quantity * item.price, 0);
+    let totalCost = 0;
+
+    items.forEach(item => {
+        // Retrieve the price per item from the itemPrices object
+        let pricePerItem = getItemPrice(item);
+
+        // Ask the user to enter the quantity for the current item
+        let quantity = prompt(`Enter quantity for ${item} (Price: $${getItemPrice(item).toFixed(2)}):`)
+
+        // Validate the entered quantity
+        if (isNaN(quantity) || quantity <= 0) {
+            alert('Please enter a valid quantity.');
+            return; // Exit the function if the quantity is invalid
+        }
+
+        // Calculate the cost for the current item
+        let itemCost = quantity * pricePerItem;
+
+        // Update the cart display with the item and its cost
+        let cartElement = document.querySelector('.Cart');
+        cartElement.innerHTML += `[${item} x ${quantity} = $${itemCost.toFixed(2)}]<br>`;
+
+        // Add the item cost to the total cost
+        totalCost += itemCost;
+    });
+
+    // Return the total cost for all selected items
+    return totalCost;
+}
+
+
+function getItemPrice(item) {
+    return itemPrices[item];
 }
 
 function isQueueFull() {
@@ -87,9 +107,7 @@ function dequeueCustomer() {
     }
 
     displayQueue();
-    resetForm();
-    // Display the total cost when dequeuing
-    alert(`Total cost for ${dequeuedCustomer.name}: $${dequeuedCustomer.totalCost.toFixed(2)}`);
+    resetForm(); 
 }
 
 function isEmpty() {
@@ -109,25 +127,26 @@ function displayQueue() {
 
                 if (customer.items.length > 0) {
                     goodsListElement.innerHTML = "Items Ordered:<br>";
-                    goodsListElement.innerHTML += "<ol>"; // Start ordered list
+                    goodsListElement.innerHTML += "<ol>"; 
 
                     customer.items.forEach(item => {
-                        let itemCost = item.price * item.quantity;
-                        goodsListElement.innerHTML += `<li>${item.name} = $${itemCost.toFixed(2)} x ${item.quantity}</li>`;
+                        let itemCost = getItemPrice(item);
+                        goodsListElement.innerHTML += `<li>${item} $${itemCost.toFixed(2)}</li>`;
                     });
 
-                    goodsListElement.innerHTML += "</ol>"; // End ordered list
+                    goodsListElement.innerHTML += "</ol>";
 
-                    // Calculate and display the total amount
                     goodsListElement.innerHTML += `<br>Total Amount: $${customer.totalCost.toFixed(2)}`;
                 }
             }
         } else {
-            customerInfoElement.textContent = ""; // Reset content when no customer
-            goodsListElement.innerHTML = ""; // Reset content when no customer
+            customerInfoElement.textContent = "";
+            goodsListElement.innerHTML = ""; 
         }
     }
 }
+
+
 
 function resetCart() {
     selectedItems = [];
@@ -144,20 +163,18 @@ document.querySelectorAll('.Items input[type=checkbox]').forEach(checkbox => {
     });
 });
 
+
 function updateCart() {
     selectedItems = getSelectedItems();
     let cartElement = document.querySelector('.Cart');
 
     if (selectedItems.length > 0) {
-        cartElement.innerHTML = 'Your Ordered Items:<br>';
-        selectedItems.forEach(item => {
-            let itemCost = item.price * item.quantity;
-            cartElement.innerHTML += `[${item.name} = $${itemCost.toFixed(2)} x ${item.quantity}]<br>`;
-        });
+        cartElement.innerHTML = 'Your Ordered Items:<br> [' + selectedItems.join(', ') + ']';
     } else {
         cartElement.innerHTML = 'Your Ordered Items:';
     }
 }
+
 
 let loginForm = document.querySelector('.login-form');
 
@@ -172,4 +189,4 @@ document.querySelector('#close-login-btn').onclick = () => {
 document.getElementById('form').addEventListener('submit', function (event) {
     event.preventDefault();
     addCustomer();
-});
+}); 
