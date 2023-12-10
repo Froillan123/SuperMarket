@@ -55,14 +55,15 @@ section
 }
 
 
-.header
+.header h1
 {
     width: 100%;
-    font-size: 2rem;
+    font-size: 4rem;
     text-align: center;
     color: var(--green);
     margin-bottom: 3rem;
-    margin-top: 0;
+    margin-top: 1rem;
+    font-weight: 500;
 }
 
 /* Normal counter */
@@ -298,10 +299,6 @@ span
 
 
 
-
-
-
-
 /* Express Counter */
 
 .grid2 h2
@@ -370,7 +367,7 @@ span
     }
     .grid-container2
     {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
     }
     .superMenu form 
     {
@@ -390,13 +387,5 @@ span
     .superMenu form .box1
     {
         width: 100%;
-    }
-}
-
-@media(max-width: 350px)
-{
-    .grid-container2
-    {
-        grid-template-columns: repeat(1, 1fr);
     }
 }

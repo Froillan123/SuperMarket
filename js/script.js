@@ -274,10 +274,6 @@ document.getElementById('form').addEventListener('submit', function (event) {
 
 
 
-
-
-
-
 // Express Counter Script
 
 
@@ -349,7 +345,7 @@ function generateCustomerForNextCounter() {
         Swal.fire({
             icon: 'error',
             title: 'Queue Overflow',
-            text: 'Maximum number of counters reached. Cannot add more customers.',
+            text: 'Maximum number of counter is reached. Cannot add more customers.',
         });
     }
 }
@@ -374,7 +370,7 @@ function enqueueCustomer() {
         Swal.fire({
             icon: 'warning',
             title: 'Queue Overflow',
-            text: 'Maximum number of counters reached. Cannot add more customers.',
+            text: 'Maximum number of counter is reached. Cannot add more customers.',
         });
     }
 }
@@ -420,7 +416,7 @@ function displayExpressCounterQueue() {
             // Calculate and add the total cost
             const totalCost = calculateTotalCostproduct(customer.items); // Change here
 
-            counterElement.innerHTML = `<h3>Counter ${index + 1}</h3>
+            counterElement.innerHTML = `<h3>Customer ${index + 1}</h3>
                                         <div class="customer-information">
                                             <p class="span">Name: ${customer.name}</p><br>
                                             <ul class="item-list">

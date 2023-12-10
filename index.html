@@ -12,7 +12,7 @@
 <body>
 
     <header class="header" id="header">
-        <h1>SuperMarket Queue</h1>
+        <h1>SuperMarket Counter</h1>
     </header>
     <main>
         
@@ -20,35 +20,35 @@
             <center><h3 class="heading"> <span>Normal Counter</span></h3></center>
             <div class="grid-container">
                 <div class="box" id="box1">
-                    <h2>Counter 1</h2>
+                    <h2>Customer 1</h2>
                     
                     <div class="customer-info" id="customerInfo1"></div>
                     <div class="null" id="displayCalculatingGoods"></div>
                     <ul class="goods-list" id="goodsList1"></ul>
                 </div>
                 <div class="box" id="box2">
-                    <h2>Counter 2</h2>
+                    <h2>Customer 2</h2>
                     <div class="customer-info" id="customerInfo2"></div>
                     <ul class="goods-list" id="goodsList2"></ul>
                 </div>
                 <div class="box" id="box3">
-                    <h2>Counter 3</h2>
+                    <h2>Customer 3</h2>
                     <div class="customer-info" id="customerInfo3"></div>
                     <ul class="goods-list" id="goodsList3"></ul>
                 </div>
                 <div class="box" id="box4">
-                    <h2>Counter 4</h2>
+                    <h2>Customer 4</h2>
                     <div class="customer-info" id="customerInfo4"></div>
                     <ul class="goods-list" id="goodsList4"></ul>
                 </div>
                 <div class="box" id="box5">
-                    <h2>Counter 5</h2>
+                    <h2>Customer 5</h2>
                     <div class="customer-info" id="customerInfo5"></div>
                     <ul class="goods-list" id="goodsList5"></ul>
                 </div>
             </div>
             <div class="buttons">
-                <button class="btn" onclick="dequeueCustomer()">Next Counter</button>
+                <button class="btn" onclick="dequeueCustomer()">Next Customer</button>
                 <a href="#" id="customer" class="btn" onclick="addCustomer()">Add Customer</a>
             </div>
         </section>
@@ -62,12 +62,13 @@
             <center><h3 class="heading"><span>Express Counter</span></h3></center>
 
             <p style="text-align: center; font-size: 2rem; margin-bottom: 3rem;">Add Customer To Add in the Counter</p>
+
+            <div class="buttons" style="margin-bottom: 2rem;">
+                <button class="btn" id="nextCounterBtn">Next Customer</button>
+                <button class="btn" id="nextCustomer">Add Customer</button>
+            </div>
             <div class="grid-container2" id="countersContainer">
                 <!-- Counter boxes will be dynamically generated here -->
-            </div>
-            <div class="buttons">
-                <button class="btn" id="nextCounterBtn">Next Counter</button>
-                <button class="btn" id="nextCustomer">Add Customer</button>
             </div>
         </section>
     </main>
