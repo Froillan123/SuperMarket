@@ -239,10 +239,7 @@ span
     font-size: 20px;
     color: var(--green);
 }
-#customerInfo1
-{
-    display: none;
-}
+
 #goodsList1
 {
     display: none;

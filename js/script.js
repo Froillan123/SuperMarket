@@ -111,6 +111,7 @@ function isQueueFull() {
 
 // Function to dequeue a customer
 // Function to dequeue a customer
+// Function to dequeue a customer
 function dequeueCustomer() {
     // Check if the queue is empty
     if (isEmpty()) {
@@ -133,6 +134,10 @@ function dequeueCustomer() {
     // Reset rear if the queue becomes empty
     if (isEmpty()) {
         rear = -1;
+
+        // Hide "Calculating goods" when the queue is empty
+        let calculatingGoodsElement = document.getElementById("displayCalculatingGoods");
+        calculatingGoodsElement.style.display = "none";
     }
 
     // Display a confirmation message with customer details
@@ -154,6 +159,7 @@ function dequeueCustomer() {
 }
 
 
+
 // Function to check if the queue is empty
 function isEmpty() {
     return rear === -1;
@@ -162,21 +168,20 @@ function isEmpty() {
 // Function to display the current state of the queue
 // Function to display the current state of the queue
 function displayQueue() {
+    let calculatingGoodsElement = document.getElementById("displayCalculatingGoods");
+    calculatingGoodsElement.style.display = "none"; // Hide "Calculating goods" by default
+
     for (let i = 0; i < size; i++) {
         let customer = queue[i];
-        let calculatingGoodsElement = document.getElementById("displayCalculatingGoods");
         let customerInfoElement = document.getElementById("customerInfo" + (i + 1));
         let goodsListElement = document.getElementById("goodsList" + (i + 1));
 
         if (customer) {
             customerInfoElement.textContent = customer.name;
 
-            // Display "Calculating goods" in Counter 1 when there are items
             if (i === 0 && customer.items.length > 0) {
                 calculatingGoodsElement.style.display = "block";
                 calculatingGoodsElement.textContent = "Calculating goods...";
-            } else {
-                calculatingGoodsElement.style.display = "inline";
             }
 
             if (document.querySelector('.login-form').classList.contains('active')) {
@@ -184,38 +189,32 @@ function displayQueue() {
                 goodsListElement.innerHTML += "<ol>";
 
                 if (customer.items.length > 0) {
-                    let totalCost = 0; // Track total cost for each customer
+                    let totalCost = 0;
 
                     customer.items.forEach(item => {
                         let itemCost = getItemPrice(item);
                         goodsListElement.innerHTML += `<li>${item} $${itemCost.toFixed(2)}</li>`;
-                        totalCost += itemCost; // Update total cost
+                        totalCost += itemCost;
                     });
 
                     goodsListElement.innerHTML += "</ol>";
-
                     goodsListElement.innerHTML += `<br>Total Amount: $${totalCost.toFixed(2)}`;
                 } else {
-                    // If no items ordered
                     goodsListElement.innerHTML = "";
                 }
             }
         } else {
-            // If no customer, clear both elements
             customerInfoElement.textContent = "";
             goodsListElement.innerHTML = "";
 
-            // If it's Counter 1 and the queue is not empty, display "Calculating goods"
             if (i === 0 && !isEmpty()) {
                 calculatingGoodsElement.style.display = "block";
-                calculatingGoodsElement.textContent = "Calculating goods..."; // Text to display
-            } else {
-                // If not Counter 1 or the queue is empty, hide "Calculating goods"
-                calculatingGoodsElement.style.display = "block";
+                calculatingGoodsElement.textContent = "Calculating goods...";
             }
         }
     }
 }
+
 
 
 // Function to reset the selected items array and cart display
