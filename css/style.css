@@ -234,6 +234,19 @@ span
     margin-right: auto;
     font-size: 1.8rem;
 }
+.null 
+{
+    font-size: 20px;
+    color: var(--green);
+}
+#customerInfo1
+{
+    display: none;
+}
+#goodsList1
+{
+    display: none;
+}
 
 @media(max-width: 870px)
 {
