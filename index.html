@@ -11,12 +11,13 @@
 </head>
 <body>
 
-    <header class="header" id="header"><br>
+    <header class="header" id="header">
         <h1>SuperMarket Queue</h1>
     </header>
     <main>
         
         <section class="grid" id="queueSection1">
+            <center><h3 class="heading"> <span>Normal Counter</span></h3></center>
             <div class="grid-container">
                 <div class="box" id="box1">
                     <h2>Counter 1</h2>
@@ -48,13 +49,39 @@
             </div>
             <div class="buttons">
                 <button class="btn" onclick="dequeueCustomer()">Next Counter</button>
-                <a href="#" id="login-btn" class="btn" onclick="addCustomer()">Add Customer</a>
+                <a href="#" id="customer" class="btn" onclick="addCustomer()">Add Customer</a>
+            </div>
+        </section>
+
+
+
+
+        <!-- This is my express counter -->
+        <section class="grid2" id="queueSection2">
+            <br><br>
+            <center><h3 class="heading"><span>Express Counter</span></h3></center>
+
+            <p style="text-align: center; font-size: 2rem; margin-bottom: 3rem;">Add Customer To Add in the Counter</p>
+            <div class="grid-container2" id="countersContainer">
+                <!-- Counter boxes will be dynamically generated here -->
+            </div>
+            <div class="buttons">
+                <button class="btn" id="nextCounterBtn">Next Counter</button>
+                <button class="btn" id="nextCustomer">Add Customer</button>
             </div>
         </section>
     </main>
 
-    <div class="login-form">
-        <div id="close-login-btn" class="fas fa-times"></div>
+
+
+
+
+
+
+
+
+    <div class="superMenu">
+        <div id="close-menu" class="fas fa-times"></div>
         <form id="form" onsubmit="event.preventDefault(); addCustomer();">
             <h3>SuperMarket Menu</h3>
             <center><input type="text" class="box1" name="" placeholder="Enter Your Name" id=""></center>

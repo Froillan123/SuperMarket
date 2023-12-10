@@ -59,7 +59,7 @@ function addCustomer() {
     resetCart();
     resetForm();
     // Optionally, close the form after adding the customer
-    document.querySelector('.login-form').classList.remove('active');
+    document.querySelector('.superMenu').classList.remove('active');
 }
 
 // Function to get selected items from checkboxes
@@ -109,8 +109,7 @@ function isQueueFull() {
     return rear === size - 1;
 }
 
-// Function to dequeue a customer
-// Function to dequeue a customer
+
 // Function to dequeue a customer
 function dequeueCustomer() {
     // Check if the queue is empty
@@ -147,7 +146,7 @@ function dequeueCustomer() {
         html: `<p><strong>Name:</strong> ${dequeuedCustomer.name}</p>
                <p><strong>Items Ordered:</strong></p>
                <ul>
-                   ${dequeuedCustomer.items.map(item => `<li>${item}</li>`).join('')}
+                   ${dequeuedCustomer.items.map(item => `<li>${item} $${getItemPrice(item).toFixed(2)}</li>`).join('')}
                </ul>
                <p><strong>Total Amount:</strong> $${dequeuedCustomer.totalCost.toFixed(2)}</p>`,
     });
@@ -157,6 +156,7 @@ function dequeueCustomer() {
     resetCart();
     displayQueue();
 }
+
 
 
 
@@ -184,7 +184,7 @@ function displayQueue() {
                 calculatingGoodsElement.textContent = "Calculating goods...";
             }
 
-            if (document.querySelector('.login-form').classList.contains('active')) {
+            if (document.querySelector('.superMenu').classList.contains('active')) {
                 goodsListElement.innerHTML = "Items Ordered:<br>";
                 goodsListElement.innerHTML += "<ol>";
 
@@ -248,13 +248,13 @@ function updateCart() {
 }
 
 // Event listener for login button to toggle the login form
-let loginForm = document.querySelector('.login-form');
-document.querySelector('#login-btn').onclick = () => {
+let loginForm = document.querySelector('.superMenu');
+document.querySelector('#customer').onclick = () => {
     loginForm.classList.toggle('active');
 }
 
 // Event listener for close login button to hide the login form
-document.querySelector('#close-login-btn').onclick = () => {
+document.querySelector('#close-menu').onclick = () => {
     loginForm.classList.remove('active');
 }
 
@@ -263,3 +263,189 @@ document.getElementById('form').addEventListener('submit', function (event) {
     event.preventDefault();
     addCustomer();
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Express Counter Script
+
+
+const randomNames = "Carl, Jacob, Kenji, Joanne, Joaana, HeroBrine, Justin, Timberlake, Warren, Dave, Jammy, Ace, Hakari, Gutang";
+let availableNames = randomNames.split(', '); // Convert to an array
+
+const itemExpress = {
+    'Mango': 1.00,
+    'Apple': 2.00,
+    'Banana': 1.50,
+    'Biscuit': 3.00,
+    'Crackers': 2.50,
+    'Oishi': 1.00,
+    'Chips': 4.00,
+    'Fita': 1.50,
+    'Fish': 2.00,
+    'Chicken': 5.00,
+    'Beef': 10.00,
+    'Pork': 12.00,
+    'Kangkong': 1.00,
+    'Shrimp': 2.00,
+    'Prawn': 3.00,
+    'Squid': 4.00,
+    'Tuna': 5.00,
+    'Salmon': 6.00,
+    'Tofu': 4.00,
+    'Egg': 2.00
+};
+
+const counterNames = ["Counter 1", "Counter 2", "Counter 3", "Counter 4", "Counter 5", "Counter 6", "Counter 7", "Counter 8", "Counter 9", "Counter 10"];
+let currentCounterIndex = 0;
+
+// Initialize an array to represent the Express Counter queue
+let expressCounterQueue = [];
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Generate all counters without customers when the page is loaded
+    generateCounters(); // This will be null in order to not accepting error when loading
+
+    // Call generateCustomerForNextCounter initially to add customers to the counters
+    generateCustomerForNextCounter();
+});
+
+document.getElementById("nextCounterBtn").addEventListener("click", dequeueCustomerExpress);
+document.getElementById("nextCustomer").addEventListener("click", enqueueCustomer);
+
+function getRandomName() {
+    if (availableNames.length === 0) {
+        // If all names have been used, reset the list
+        availableNames = randomNames.split(', ');
+    }
+    
+    const randomIndex = Math.floor(Math.random() * availableNames.length);
+    const selectedName = availableNames[randomIndex];
+    // Remove the selected name from the available names list
+    availableNames.splice(randomIndex, 1);
+
+    return selectedName;
+}
+
+function generateCustomerForNextCounter() {
+    if (expressCounterQueue.length > 0 && currentCounterIndex < 10) {
+        const counterElement = document.getElementById(`counter${currentCounterIndex + 1}`);
+        generateCustomer(counterElement);
+        dequeueCustomerExpress(); // Dequeue after generating a customer
+        currentCounterIndex++;
+    } else {
+        // Display a message if the maximum counter limit is reached
+        Swal.fire({
+            icon: 'error',
+            title: 'Queue Overflow',
+            text: 'Maximum number of counters reached. Cannot add more customers.',
+        });
+    }
+}
+
+function enqueueCustomer() {
+    if (expressCounterQueue.length < 10) {
+        const randomName = getRandomName();
+        const selectedProducts = getRandomProducts(4);
+        const totalCost = calculateTotalCostproduct(selectedProducts);
+
+        // Add the customer to the queue
+        expressCounterQueue.push({
+            name: randomName,
+            items: selectedProducts,
+            totalCost: totalCost
+        });
+
+        // Display the customer information
+        displayExpressCounterQueue();
+    } else {
+        // Display a message if the maximum counter limit is reached
+        Swal.fire({
+            icon: 'warning',
+            title: 'Queue Overflow',
+            text: 'Maximum number of counters reached. Cannot add more customers.',
+        });
+    }
+}
+
+function dequeueCustomerExpress() {
+    // Check if there is a customer in the Express Counter queue
+    if (expressCounterQueue.length > 0) {
+        const dequeuedCustomer = expressCounterQueue.shift(); // Dequeue the customer
+
+        // Display a confirmation message with customer details
+        Swal.fire({
+            icon: "info",
+            title: 'Paid Successfully',
+            html: `<p><strong>Name:</strong> ${dequeuedCustomer.name}</p>
+               <p><strong>Items Ordered:</strong></p>
+               <ul>
+                   ${dequeuedCustomer.items.map(item => `<li>${item} $${itemExpress[item].toFixed(2)}</li>`).join('')}
+               </ul>
+               <p><strong>Total Amount:</strong> $${dequeuedCustomer.totalCost.toFixed(2)}</p>`,
+        });
+
+        // Display the updated Express Counter queue
+        displayExpressCounterQueue();
+    } else {
+        // Display a message if there is no customer in the Express Counter queue
+        Swal.fire({
+            icon: 'warning',
+            title: 'No customer in the Express Counter!',
+        });
+    }
+}
+
+function displayExpressCounterQueue() {
+    const countersContainer = document.getElementById("countersContainer");
+    countersContainer.innerHTML = ""; // Clear the existing counters
+
+    expressCounterQueue.forEach((customer, index) => {
+        if (customer.items.length > 0) {
+            const counterElement = document.createElement("div");
+            counterElement.classList.add("grid-box");
+            counterElement.id = `counter${index + 1}`;
+
+            // Calculate and add the total cost
+            const totalCost = calculateTotalCostproduct(customer.items); // Change here
+
+            counterElement.innerHTML = `<h3>Counter ${index + 1}</h3>
+                                        <div class="customer-information">
+                                            <p class="span">Name: ${customer.name}</p><br>
+                                            <ul class="item-list">
+                                                ${customer.items.map(item => `<li>${item} $${itemExpress[item].toFixed(2)}</li>`).join('')}
+                                            </ul><br>
+                                            <p>Total Amount: $${totalCost.toFixed(2)}</p>
+                                        </div>`;
+
+            countersContainer.appendChild(counterElement);
+        }
+    });
+}
+
+function getRandomProducts(count) {
+    const allProducts = Object.keys(itemExpress);
+    const randomProducts = [];
+
+    for (let i = 0; i < count; i++) {
+        const randomIndex = Math.floor(Math.random() * allProducts.length);
+        randomProducts.push(allProducts[randomIndex]);
+    }
+
+    return randomProducts;
+}
+
+function calculateTotalCostproduct(products) {
+    return products.reduce((total, product) => total + itemExpress[product], 0); // Change here
+}
