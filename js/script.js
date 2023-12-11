@@ -156,9 +156,6 @@ function dequeueCustomer() {
     displayQueue();
 }
 
-
-
-
 // Function to check if the queue is empty
 function isEmpty() {
     return rear === -1;
@@ -212,9 +209,6 @@ function displayQueue() {
         }
     }
 }
-
-
-
 // Function to reset the selected items array and cart display
 function resetCart() {
     selectedItems = [];
@@ -269,26 +263,26 @@ const randomNames = "Carl, Jacob, Kenji, Joanne, Joaana, HeroBrine, Justin, Timb
 let availableNames = randomNames.split(', '); 
 
 const itemExpress = {
-    'Mango': 1.00,
-    'Apple': 2.00,
-    'Banana': 1.50,
-    'Biscuit': 3.00,
-    'Crackers': 2.50,
-    'Oishi': 1.00,
-    'Chips': 4.00,
-    'Fita': 1.50,
-    'Fish': 2.00,
-    'Chicken': 5.00,
-    'Beef': 10.00,
-    'Pork': 12.00,
-    'Kangkong': 1.00,
-    'Shrimp': 2.00,
-    'Prawn': 3.00,
-    'Squid': 4.00,
-    'Tuna': 5.00,
-    'Salmon': 6.00,
-    'Tofu': 4.00,
-    'Egg': 2.00
+    'Mango': 3.00,
+    'Apple': 5.00,
+    'Banana': 3.50,
+    'Biscuit': 12.00,
+    'Crackers': 12.50,
+    'Oishi': 8.00,
+    'Chips': 6.00,
+    'Fita': 7.50,
+    'Fish': 22.00,
+    'Chicken': 15.00,
+    'Beef': 25.00,
+    'Pork': 27.00,
+    'Kangkong': 5.00,
+    'Shrimp': 17.00,
+    'Prawn': 15.00,
+    'Squid': 18.00,
+    'Tuna': 50.00,
+    'Salmon': 35.00,
+    'Tofu': 23.00,
+    'Egg': 10.00
 };
 
 const counterNames = ["Customer 1", "Customer 2", "Customer 3", "Customer 4", "Customer 5", "Customer 6", "Customer 7", "Customer 8", "Customer 9", "Customer 10"];
@@ -298,7 +292,7 @@ let currentCounterIndex = 0;
 let expressCounterQueue = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Generate all counters without customers when the page is loaded
+
     generateCounters(); // This will be null in order to not accepting error when loading
 
     // Call generateCustomerForNextCounter initially to add customers to the counters
@@ -322,26 +316,12 @@ function getRandomName() {
     return selectedName;
 }
 
-function generateCustomerForNextCounter() {
-    if (expressCounterQueue.length > 0 && currentCounterIndex < 10) {
-        const counterElement = document.getElementById(`counter${currentCounterIndex + 1}`);
-        generateCustomer(counterElement);
-        dequeueCustomerExpress(); // Dequeue after generating a customer
-        currentCounterIndex++;
-    } else {
-        // Display a message if the maximum counter limit is reached
-        Swal.fire({
-            icon: 'error',
-            title: 'Queue Overflow',
-            text: 'Maximum number of counter is reached. Cannot add more customers.',
-        });
-    }
-}
+
 
 function enqueueCustomer() {
     if (expressCounterQueue.length < 10) {
         const randomName = getRandomName();
-        const selectedProducts = getRandomProducts(4);
+        const selectedProducts = getRandomProducts(5);
         const totalCost = calculateTotalCostproduct(selectedProducts);
 
         // Add the customer to the queue
@@ -386,7 +366,7 @@ function dequeueCustomerExpress() {
         // Display a message if there is no customer in the Express Counter queue
         Swal.fire({
             icon: 'warning',
-            title: 'No customer in the Express Counter!',
+            title: 'Queue is empty!',
         });
     }
 }
@@ -400,6 +380,12 @@ function displayExpressCounterQueue() {
             const counterElement = document.createElement("div");
             counterElement.classList.add("grid-box");
             counterElement.id = `counter${index + 1}`;
+
+            // Add a conditional check to set green border for the first counter
+            if (index === 0) {
+                counterElement.style.border = "2px solid green";
+            }
+
 
             // Calculate and add the total cost
             const totalCost = calculateTotalCostproduct(customer.items); // Change here
@@ -418,6 +404,7 @@ function displayExpressCounterQueue() {
     });
 }
 
+
 function getRandomProducts(count) {
     const allProducts = Object.keys(itemExpress);
     const randomProducts = [];
@@ -431,5 +418,5 @@ function getRandomProducts(count) {
 }
 
 function calculateTotalCostproduct(products) {
-    return products.reduce((total, product) => total + itemExpress[product], 0); // Change here
+    return products.reduce((total, product) => total + itemExpress[product], 0); 
 }
