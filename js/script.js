@@ -134,7 +134,6 @@ function dequeueCustomer() {
     if (isEmpty()) {
         rear = -1;
 
-        // Hide "Calculating goods" when the queue is empty
         let calculatingGoodsElement = document.getElementById("displayCalculatingGoods");
         calculatingGoodsElement.style.display = "none";
     }
@@ -142,13 +141,13 @@ function dequeueCustomer() {
     // Display a confirmation message with customer details
     Swal.fire({
         icon: "info",
-        title: 'Paid Successfully',
-        html: `<p><strong>Name:</strong> ${dequeuedCustomer.name}</p>
-               <p><strong>Items Ordered:</strong></p>
-               <ul>
+        title: 'Customer Paid Successfully',
+        html: `<p style="font-size: 16px;"><strong>Name:</strong> ${dequeuedCustomer.name}</p><br>
+               <p style="font-size: 16px;"><strong>Items Ordered:</strong></p>
+               <ul style="font-size: 16px;">
                    ${dequeuedCustomer.items.map(item => `<li>${item} $${getItemPrice(item).toFixed(2)}</li>`).join('')}
-               </ul>
-               <p><strong>Total Amount:</strong> $${dequeuedCustomer.totalCost.toFixed(2)}</p>`,
+               </ul><br>
+               <p style="font-size: 18px;"><strong>Total Amount:</strong> $${dequeuedCustomer.totalCost.toFixed(2)}</p>`,
     });
 
     // Reset the form, cart, update counter data, display the queue, and reset the form
@@ -165,7 +164,6 @@ function isEmpty() {
     return rear === -1;
 }
 
-// Function to display the current state of the queue
 // Function to display the current state of the queue
 function displayQueue() {
     let calculatingGoodsElement = document.getElementById("displayCalculatingGoods");
@@ -265,20 +263,10 @@ document.getElementById('form').addEventListener('submit', function (event) {
 });
 
 
-
-
-
-
-
-
-
-
-
 // Express Counter Script
 
-
 const randomNames = "Carl, Jacob, Kenji, Joanne, Joaana, HeroBrine, Justin, Timberlake, Warren, Dave, Jammy, Ace, Hakari, Gutang";
-let availableNames = randomNames.split(', '); // Convert to an array
+let availableNames = randomNames.split(', '); 
 
 const itemExpress = {
     'Mango': 1.00,
@@ -303,7 +291,7 @@ const itemExpress = {
     'Egg': 2.00
 };
 
-const counterNames = ["Counter 1", "Counter 2", "Counter 3", "Counter 4", "Counter 5", "Counter 6", "Counter 7", "Counter 8", "Counter 9", "Counter 10"];
+const counterNames = ["Customer 1", "Customer 2", "Customer 3", "Customer 4", "Customer 5", "Customer 6", "Customer 7", "Customer 8", "Customer 9", "Customer 10"];
 let currentCounterIndex = 0;
 
 // Initialize an array to represent the Express Counter queue
@@ -370,7 +358,7 @@ function enqueueCustomer() {
         Swal.fire({
             icon: 'warning',
             title: 'Queue Overflow',
-            text: 'Maximum number of counter is reached. Cannot add more customers.',
+            text: 'Cannot add more customers.',
         });
     }
 }
@@ -383,13 +371,13 @@ function dequeueCustomerExpress() {
         // Display a confirmation message with customer details
         Swal.fire({
             icon: "info",
-            title: 'Paid Successfully',
-            html: `<p><strong>Name:</strong> ${dequeuedCustomer.name}</p>
-               <p><strong>Items Ordered:</strong></p>
-               <ul>
+            title: 'Customer Paid Successfully',
+            html: `<p style="font-size: 16px;"><strong>Name:</strong> ${dequeuedCustomer.name}</p><br>
+               <p style="font-size: 16px;"><strong>Items Ordered:</strong></p>
+               <ul style="font-size: 16px;">
                    ${dequeuedCustomer.items.map(item => `<li>${item} $${itemExpress[item].toFixed(2)}</li>`).join('')}
-               </ul>
-               <p><strong>Total Amount:</strong> $${dequeuedCustomer.totalCost.toFixed(2)}</p>`,
+               </ul><br>
+               <p style="font-size: 18px;"><strong>Total Amount:</strong> $${dequeuedCustomer.totalCost.toFixed(2)}</p>`,
         });
 
         // Display the updated Express Counter queue
